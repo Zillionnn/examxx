@@ -159,3 +159,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<script type="text/javascript" src="resources/bootstrap/js/bootstrap.min.js"></script>
 	</body>
 </html>
+<script>
+	window.onload=function(){
+		addNumber();
+	};
+
+
+	/**
+	 * 对题目重新编号排序
+	 */
+	 function addNumber() {
+		var questions = $("li.question");
+
+		questions.each(function(index) {
+			$(this).find(".question-no").text(index + 1 + ".");
+		});
+	}
+</script>

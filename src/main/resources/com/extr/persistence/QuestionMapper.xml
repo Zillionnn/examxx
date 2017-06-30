@@ -124,7 +124,15 @@
 	</select>
 
 	<select id="getFalseQuestionResult" resultType="com.extr.controller.domain.FalseQuestionResult">
-		select a.id questionId,a.content,a.answer,a.question_type_id questionTypeId,c.point_name pointName,d.field_name fieldName,a.wrong_times times from et_question a ,et_question_2_point b,et_knowledge_point c,et_field d
+		select a.id questionId,a.content,a.answer,a.question_type_id questionTypeId,
+		c.point_id pointId,
+		c.point_name pointName,
+		c.field_id fieldId,
+		d.field_name fieldName,a.wrong_times times
+		from et_question a ,
+		et_question_2_point b,
+		et_knowledge_point c,
+		et_field d
 		<where>
 			a.id=b.question_id and
 			b.point_id=c.point_id and c.field_id=d.field_id ORDER BY wrong_times DESC
@@ -230,6 +238,18 @@
 	<select id="getAllQuestion" resultType="com.extr.domain.question.Question">
 		select * from et_question et order by et.wrong_times DESC
 
+	</select>
+
+	<select id="getAllKnowledgePoint"  resultType="com.extr.domain.question.KnowledgePoint">
+		SELECT a.point_id pointId,
+		 a.point_name pointName,
+
+		b.field_id fieldId,
+		b.field_name fieldName
+		 FROM  et_knowledge_point a, et_field b
+		 <where>
+			 b.field_id =a.field_id
+		 </where>
 	</select>
 
 	<update id="updateQuestionWithList" parameterType="java.util.List">

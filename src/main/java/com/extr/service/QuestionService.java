@@ -180,4 +180,6 @@ public interface QuestionService {
 	public List<Question> getAllQuestion();
 	
 	List<FalseQuestionResult> getFalseQuestionResult();
+
+	List<KnowledgePoint> getAllKnowledgePoint();
 }

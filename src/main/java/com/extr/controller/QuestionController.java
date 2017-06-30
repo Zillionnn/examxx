@@ -141,7 +141,7 @@ public class QuestionController {
 		model.addAttribute("fieldList", questionService.getAllField(null));
 
 		model.addAttribute("knowledgeList",
-				questionService.getKnowledgePointByFieldId(fieldId,null));
+				questionService.getKnowledgePointByFieldId(fieldId, null));
 
 		model.addAttribute("questionTypeList",
 				questionService.getQuestionTypeList());
@@ -192,7 +192,7 @@ public class QuestionController {
 		Message message = new Message();
 		HashMap<Integer, String> pointMap = new HashMap<Integer, String>();
 		List<KnowledgePoint> pointList = questionService
-				.getKnowledgePointByFieldId(fieldId,null);
+				.getKnowledgePointByFieldId(fieldId, null);
 		for (KnowledgePoint point : pointList) {
 			pointMap.put(point.getPointId(), point.getPointName());
 		}
@@ -416,7 +416,7 @@ public class QuestionController {
 		
 		List<Field> fieldList = questionService.getAllField(null);
 		
-		List<KnowledgePoint> pointList = questionService.getKnowledgePointByFieldId(fieldId,page);
+		List<KnowledgePoint> pointList = questionService.getKnowledgePointByFieldId(fieldId, page);
 		String pageStr = PagingUtil.getPageBtnlink(index,
 				page.getTotalPage());
 		model.addAttribute("pointList", pointList);
@@ -587,6 +587,14 @@ public class QuestionController {
 		List<FalseQuestionResult> list=questionService.getFalseQuestionResult();
 		return list;
 		
+	}
+
+	@RequestMapping(method={RequestMethod.GET},value="/admin/getAllKnowledgePoint")
+	@ResponseBody
+	public Object getAllKnowledgePoint(){
+		List<KnowledgePoint> list=questionService.getAllKnowledgePoint();
+		return list;
+
 	}
 	
 }

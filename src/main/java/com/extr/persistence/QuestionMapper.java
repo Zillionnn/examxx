@@ -170,4 +170,6 @@ public interface QuestionMapper {
 	public void updateQuestionWithList(@Param("list") List<Integer> list);
 	
 	public void deleteQuestionTag(@Param("questionId") int questionId, @Param("userId") int userId, @Param("array") List<QuestionTag> array);
+
+	 List<KnowledgePoint> getAllKnowledgePoint();
 }

@@ -409,4 +409,10 @@ public class QuestionServiceImpl implements QuestionService {
 		// TODO Auto-generated method stub
 		return questionMapper.getFalseQuestionResult();
 	}
+
+
+	@Override
+	public List<KnowledgePoint> getAllKnowledgePoint() {
+		return questionMapper.getAllKnowledgePoint();
+	}
 }

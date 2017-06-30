@@ -5,6 +5,7 @@ public class FalseQuestionResult {
 	private String content;
 	private String answer;
 	private int questionTypeId;
+	private int pointId;
 	private String pointName;
 	private String fieldName;
 	private String times;
@@ -50,7 +51,12 @@ public class FalseQuestionResult {
 	public void setTimes(String times) {
 		this.times = times;
 	}
-	
-	
 
+	public int getPointId() {
+		return pointId;
+	}
+
+	public void setPointId(int pointId) {
+		this.pointId = pointId;
+	}
 }
