@@ -127,8 +127,8 @@
                 <div class="page-content row">
                     <%--该知识点错误率--%>
 
-                    <div id="fieldFalse" >
-                        <h3 >
+                    <div id="fieldFalse">
+                        <h3>
                             题库:<span id=""></span>
                         </h3>
                     </div>
@@ -138,8 +138,9 @@
                     <h3 class="slideSection">
                         所有题目错误统计
                     </h3>
+
                     <div id="allfalse" style="display-none;">
-                        <table id="falseTable" class="table" >
+                        <table id="falseTable" class="table">
                             <tr>
                                 <td>题目</td>
                                 <td>错误</td>
@@ -183,7 +184,7 @@
     var allPointArray = [];
     window.onload = function () {
 
-        $(".slideSection").click(function(){
+        $(".slideSection").click(function () {
             $(this).next().slideToggle();
         });
 
@@ -251,16 +252,35 @@
             type: 'get',
             dataType: 'json',
             success: function (data) {
-                for (var i in data) {
+                for (var i = 0; i < data.length; i++) {
                     allPointArray.push({
-                        "fieldId":data[i].fieldId,
-                        "fieldName":data[i].fieldName,
-                        "pointId": data[i].pointId,
-                        "pointName": data[i].pointName,
-                        "wrongTimes": 0,
-                        "rightTimes": 0,
-                        "allQuestion": 0
+                        "fieldId": data[i].fieldId,
+                        "fieldName": data[i].fieldName,
+                        "points": []
+
                     });
+                    if (i > 0 && data[i].fieldId == data[i - 1].fieldId) {
+                        allPointArray.pop();
+                    }
+                }
+                for (var j in allPointArray) {
+                    var pointsArray = [];
+
+                    for (var i in data) {
+                        if (data[i].fieldId == allPointArray[j].fieldId) {
+                            console.log(data[i].fieldId);
+
+                            pointsArray.push({
+                                "pointId": data[i].pointId,
+                                "pointName": data[i].pointName,
+                                "wrongTimes": 0,
+                                "rightTimes": 0,
+                                "allQuestion": 0
+                            });
+                        }
+                        allPointArray[j].points=pointsArray;
+                    }
+
                 }
 
 
@@ -272,23 +292,23 @@
             }
         });
 
-        var fieldFalse=document.getElementById("fieldFalse");
-        var table=document.createElement("table");
+        var fieldFalse = document.getElementById("fieldFalse");
+        var table = document.createElement("table");
         fieldFalse.appendChild(table);
-/*
-*
-* undone
-*
-*
-* */
-        for(var i in allPointArray){
+        /*
+         *
+         * undone
+         *
+         *
+         * */
+        for (var i in allPointArray) {
             for (var rowIndex = 1; rowIndex < allPointArray.length; rowIndex++) {
                 var tr = table.insertRow(-1);
                 var td1 = tr.insertCell(-1);
-                td1.innerHTML=allPointArray[i].pointName;
-                var td2=tr.insertCell(-1);
-                var wrongPercent=(allPointArray[i].wrongTimes/ allPointArray[i].allQuestion)*100;
-                td2.innerHTML=wrongPercent.toFixed(2);
+                td1.innerHTML = allPointArray[i].pointName;
+                var td2 = tr.insertCell(-1);
+                var wrongPercent = (allPointArray[i].wrongTimes / allPointArray[i].allQuestion) * 100;
+                td2.innerHTML = wrongPercent.toFixed(2);
                 console.log(wrongPercent);
             }
         }
