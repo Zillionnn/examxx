@@ -128,9 +128,17 @@
                     <%--该知识点错误率--%>
 
                     <div id="fieldFalse">
-                        <h3>
-                            题库:<span id=""></span>
-                        </h3>
+                        <p id="peace"></p>
+                        <%--   <table class="table">
+                               <c:forEach items="${knowledgeList }" var="item">
+                                   <tr>
+                                       <td>${item.fieldName}</td>
+                                       <td>${item.point}</td>
+                                   </tr>
+
+                               </c:forEach>
+                           </table>
+                      --%>
                     </div>
 
 
@@ -139,7 +147,7 @@
                         所有题目错误统计
                     </h3>
 
-                    <div id="allfalse" style="display-none;">
+                    <div id="allfalse" style="display:none;">
                         <table id="falseTable" class="table">
                             <tr>
                                 <td>题目</td>
@@ -188,15 +196,16 @@
             $(this).next().slideToggle();
         });
 
-        allFalse();
+
         getAllKLPoint();
+        allFalse();
     };
 
     function allFalse() {
         $.ajax({
             //	url:'/examxx/admin/getAllFalse',
             url: '/admin/getAllFalse',
-
+            async: false,
             type: 'GET',
             dataType: 'json',
             success: function (data) {
@@ -218,40 +227,48 @@
 
                     if (data[rowIndex].times == 0) {
                         for (var i in allPointArray) {
-                            if (data[rowIndex - 1].pointId == allPointArray[i].pointId) {
-                                allPointArray[i].rightTimes++;
-                                allPointArray[i].allQuestion = allPointArray[i].wrongTimes + allPointArray[i].rightTimes;
+                            for (var j in allPointArray[i].points) {
+                                if (data[rowIndex - 1].pointId == allPointArray[i].points[j].pointId) {
+                                    allPointArray[i].points[j].rightTimes++;
+                                    allPointArray[i].points[j].allQuestion = allPointArray[i].points[j].wrongTimes + allPointArray[i].points[j].rightTimes;
+                                }
                             }
+
                         }
                     }
-
 
                     //新插入一道题wrong times自动设为了1？？
                     if (data[rowIndex].times != 0) {
                         for (var i in allPointArray) {
-                            if (data[rowIndex - 1].pointId == allPointArray[i].pointId) {
-                                allPointArray[i].wrongTimes++;
-                                allPointArray[i].allQuestion = allPointArray[i].wrongTimes + allPointArray[i].rightTimes;
+                            for (var j in  allPointArray[i].points) {
+                                if (data[rowIndex - 1].pointId == allPointArray[i].points[j].pointId) {
+                                    allPointArray[i].points[j].wrongTimes++;
+                                    allPointArray[i].points[j].allQuestion = allPointArray[i].points[j].wrongTimes + allPointArray[i].points[j].rightTimes;
+                                }
                             }
+
                         }
                     }
 
                 }
-
             },
             error: function (err) {
                 console.log(err);
             }
         });
+
+        innerAllKlPoint();
+
     }
 
     function getAllKLPoint() {
-
         $.ajax({
             url: '/admin/getAllKnowledgePoint',
             type: 'get',
+            async: false,
             dataType: 'json',
             success: function (data) {
+
                 for (var i = 0; i < data.length; i++) {
                     allPointArray.push({
                         "fieldId": data[i].fieldId,
@@ -263,13 +280,11 @@
                         allPointArray.pop();
                     }
                 }
+
                 for (var j in allPointArray) {
                     var pointsArray = [];
-
                     for (var i in data) {
                         if (data[i].fieldId == allPointArray[j].fieldId) {
-                            console.log(data[i].fieldId);
-
                             pointsArray.push({
                                 "pointId": data[i].pointId,
                                 "pointName": data[i].pointName,
@@ -278,13 +293,12 @@
                                 "allQuestion": 0
                             });
                         }
-                        allPointArray[j].points=pointsArray;
+                        allPointArray[j].points = pointsArray;
                     }
-
                 }
 
-
                 console.log(allPointArray);
+
             },
             error: function (err) {
                 console.log("ERROR>>");
@@ -292,29 +306,43 @@
             }
         });
 
-        var fieldFalse = document.getElementById("fieldFalse");
-        var table = document.createElement("table");
-        fieldFalse.appendChild(table);
-        /*
-         *
-         * undone
-         *
-         *
-         * */
-        for (var i in allPointArray) {
-            for (var rowIndex = 1; rowIndex < allPointArray.length; rowIndex++) {
-                var tr = table.insertRow(-1);
-                var td1 = tr.insertCell(-1);
-                td1.innerHTML = allPointArray[i].pointName;
-                var td2 = tr.insertCell(-1);
-                var wrongPercent = (allPointArray[i].wrongTimes / allPointArray[i].allQuestion) * 100;
-                td2.innerHTML = wrongPercent.toFixed(2);
-                console.log(wrongPercent);
-            }
-        }
-
 
     }
+
+
+    function innerAllKlPoint() {
+        console.log(allPointArray);
+        var fieldFalse = document.getElementById("fieldFalse");
+
+
+
+
+        for (var i =0; i<allPointArray.length; i++) {
+            var titleNode = document.createElement("h3");
+            var table = document.createElement("table");
+            table.setAttribute('class','table');
+
+            titleNode.innerHTML = "题库:" + allPointArray[i].fieldName;
+            fieldFalse.appendChild(titleNode);
+
+            fieldFalse.appendChild(table);
+            table.createTHead().innerHTML="<tr><th>知识点</th><th>错误率</th></tr>";
+            for (var rowIndex = 0; rowIndex < allPointArray[i].points.length; rowIndex++) {
+                var tr = table.insertRow(-1);
+                var td1 = tr.insertCell(-1);
+                td1.innerHTML = allPointArray[i].points[rowIndex].pointName;
+                var td2 = tr.insertCell(-1);
+                var wrongTimes = allPointArray[i].points[rowIndex].wrongTimes;
+                var allQues = allPointArray[i].points[rowIndex].allQuestion;
+
+                var wrongPercent = (wrongTimes / allQues) * 100;
+                console.log(wrongPercent);
+                td2.innerHTML = wrongPercent.toFixed(2) + "%";
+
+            }
+        }
+    }
+
 </script>
 </body>
 </html>

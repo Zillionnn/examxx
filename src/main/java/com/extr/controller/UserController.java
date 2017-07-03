@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.extr.domain.question.KnowledgePoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -270,9 +271,14 @@ public class UserController {
 	 */
 	@RequestMapping(value = "admin/user-history", method = RequestMethod.GET)
 	public  String userHistoryPage(Model model, HttpServletRequest request) {
+		List<KnowledgePoint> list=questionService.getAllKnowledgePoint();
+
+		model.addAttribute("knowledgeList",list );
 
 		return "admin/user-history";
 	}
+
+
 	/**
 	 * 禁用用户
 	 * @param model
