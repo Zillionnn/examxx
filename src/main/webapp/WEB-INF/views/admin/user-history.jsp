@@ -263,6 +263,7 @@
 
     function getAllKLPoint() {
         $.ajax({
+         //   url:'/examxx/admin/getAllKnowledgePoint',
             url: '/admin/getAllKnowledgePoint',
             type: 'get',
             async: false,
@@ -313,9 +314,6 @@
     function innerAllKlPoint() {
         console.log(allPointArray);
         var fieldFalse = document.getElementById("fieldFalse");
-
-
-
 
         for (var i =0; i<allPointArray.length; i++) {
             var titleNode = document.createElement("h3");
