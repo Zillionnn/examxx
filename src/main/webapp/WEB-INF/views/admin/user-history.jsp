@@ -144,7 +144,7 @@
 
                     <%--所有题目错误情况--%>
                     <h3 class="slideSection">
-                        所有题目错误统计
+                        <a href="javascript:void(0)"> 所有题目错误统计</a>
                     </h3>
 
                     <div id="allfalse" style="display:none;">
