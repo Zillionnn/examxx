@@ -595,7 +595,7 @@ public class ExamController {
 		pageModel.setPageNo(index);
 		List<ExamHistory> hisList = examService.getUserExamHistoryListByUserId(userInfo.getUserid(),pageModel);
 		model.addAttribute("hisList", hisList);
-		String pageStr = PagingUtil.getPagelink(index, pageModel.getTotalPage(), "", "student/exam-his");
+		String pageStr = PagingUtil.getPagelink(index, pageModel.getTotalPage(), "", "student/exam-history");
 		model.addAttribute("pageStr", pageStr);
 		return "student/exam-history";
 	}
