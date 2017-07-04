@@ -30,7 +30,7 @@ String basePath = request.getScheme() + "://"
 				<div class="row">
 					<div class="col-xs-5">
 						<div class="logo">
-							<h1>保密考试系统</h1>
+							<h1>保密知识考试系统</h1>
 						</div>
 					</div>
 					<div class="col-xs-7" id="login-info">

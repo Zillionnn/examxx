@@ -33,7 +33,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div class="container">
 				<div class="row">
 					<div class="col-xs-5">
-						<h1>保密考试系统</h1>
+						<h1>保密知识考试系统</h1>
 
 					</div>
 					</div>
