@@ -33,9 +33,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div class="container">
 				<div class="row">
 					<div class="col-xs-5">
-						<h1>保密知识考试系统</h1>
-
-					</div>
+						<div class="logo">
+							<h1>保密知识考试系统</h1>
+						</div>
 					</div>
 					<div class="col-xs-7" id="login-info">
 						<c:choose>
