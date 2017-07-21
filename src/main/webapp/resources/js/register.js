@@ -1,5 +1,6 @@
 $(function() {
 	create_account.initial();
+
 });
 
 var create_account = {
@@ -16,7 +17,7 @@ var create_account = {
 					var result = create_account.verifyInput();
 					if (result) {
 						var data = new Object();
-						data.username = $("#name").val();
+						data.username =$("#name").val().toLowerCase();
 						data.email = $("#email").val();
 						data.password = $("#password").val();
 						data.fieldId = $("#job-type-input").val();
