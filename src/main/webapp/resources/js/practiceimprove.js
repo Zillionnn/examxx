@@ -1,7 +1,6 @@
 $(function() {
 	modal.prepare();
 	examing.initial();
-console.log(123);
 });
 
 var examing = {

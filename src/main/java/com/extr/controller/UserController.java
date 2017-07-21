@@ -119,6 +119,8 @@ public class UserController {
 	Message userRegister(@RequestBody User user) {
 		user.setCreate_date(new Date());
 		String password = user.getPassword() + "{" + user.getUsername() + "}";
+
+		System.out.println(password);
 		PasswordEncoder passwordEncoder = new StandardPasswordEncoderForSha1();
 		String resultPassword = passwordEncoder.encode(password);
 		user.setPassword(resultPassword);

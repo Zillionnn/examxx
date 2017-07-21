@@ -43,7 +43,7 @@ var question_import={
 						util.error(errorMsg);
 					}
 			    });
-			},2);
+			},2000);
 		},
 		questionDataProcess : function questionDataProcess(){
 			$("#from-question-import").submit(function(){

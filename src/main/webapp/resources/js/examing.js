@@ -484,8 +484,8 @@ var examing = {
 		$(".question-list-item").click(function(){
 			$(this).parent().find(".question-list-item-selected").removeClass("question-list-item-selected");
 			$(this).addClass("question-list-item-selected");
-			console.log("click");
-		console.log($(this).find("input").prop("checked"));
+			//console.log("click");
+		//console.log($(this).find("input").prop("checked"));
 				$(this).find("input").prop("checked", true);
 
 

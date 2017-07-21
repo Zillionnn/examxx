@@ -209,7 +209,7 @@
             type: 'GET',
             dataType: 'json',
             success: function (data) {
-                console.log(data);
+                //console.log(data);
 
                 var table = document.getElementById("falseTable");
                 for (var rowIndex = 1; rowIndex < data.length; rowIndex++) {
@@ -219,7 +219,7 @@
                     var parser = new DOMParser();
                     var xmldom = parser.parseFromString(data[rowIndex - 1].content, "text/xml");
 
-                    //		console.log(xmldom.getElementsByTagName('title')[0].firstChild.nodeValue);
+                    //		//console.log(xmldom.getElementsByTagName('title')[0].firstChild.nodeValue);
                     var title = xmldom.getElementsByTagName('title')[0].firstChild.nodeValue;
                     td1.innerHTML = title;
                     var td2 = tr.insertCell(-1);
@@ -253,7 +253,7 @@
                 }
             },
             error: function (err) {
-                console.log(err);
+                //console.log(err);
             }
         });
 
@@ -298,12 +298,12 @@
                     }
                 }
 
-                console.log(allPointArray);
+                //console.log(allPointArray);
 
             },
             error: function (err) {
-                console.log("ERROR>>");
-                console.log(err);
+                //console.log("ERROR>>");
+                //console.log(err);
             }
         });
 
@@ -312,7 +312,7 @@
 
 
     function innerAllKlPoint() {
-        console.log(allPointArray);
+        //console.log(allPointArray);
         var fieldFalse = document.getElementById("fieldFalse");
 
         for (var i =0; i<allPointArray.length; i++) {
@@ -334,7 +334,7 @@
                 var allQues = allPointArray[i].points[rowIndex].allQuestion;
 
                 var wrongPercent = (wrongTimes / allQues) * 100;
-                console.log(wrongPercent);
+                //console.log(wrongPercent);
                 td2.innerHTML = wrongPercent.toFixed(2) + "%";
 
             }

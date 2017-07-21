@@ -468,10 +468,10 @@ String basePath = request.getScheme() + "://"
 	function startRandomExam(){
 
 			var question_entity={"paperName":"模拟试卷","passPoint":60,"time":"45","paperPoint":"100","paperType":"1",
-				"questionTypeNum":{"1":20,"2":2,"3":10},"questionTypePoint":{"1":5,"2":5,"3":5},
+				"questionTypeNum":{"1":20,"3":10},"questionTypePoint":{"1":5,"2":5,"3":5},
 				"questionKnowledgePointRate":{"1":0,"2":0}};
 
-			console.log(JSON.stringify(question_entity));
+			//console.log(JSON.stringify(question_entity));
 			$.ajax({
 				headers : {
 					'Accept' : 'application/json',
@@ -485,23 +485,23 @@ String basePath = request.getScheme() + "://"
 				success : function(message, tst, jqXHR) {
 					/*	if (!util.checkSessionOut(jqXHR))
 					 return false;*/
-					console.log(message);
+					//console.log(message);
 					if (message.result == "success") {
-						console.log("MESSAGE ID>>"+message.generatedId);
+					//	//console.log("MESSAGE ID>>"+message.generatedId);
 						exampaperid=message.generatedId;
 					//	document.location.href = document.getElementsByTagName('base')[0].href + 'admin/exampaper-edit/' + message.generatedId;
 							util.success("添加成功", function() {
 						 document.location.href = document.getElementsByTagName('base')[0].href + '/student/examing/' + message.generatedId;
 						 });
 					} else {
-						console.log("add paper fail");
+						//console.log("add paper fail");
 							util.error("操作失败请稍后尝试>>" + message.result);
 						 $(".df-submit").removeAttr("disabled");
 					}
 
 				},
 				error : function(jqXHR, textStatus) {
-					console.log("add paper fail");
+					//console.log("add paper fail");
 					util.error("操作失败请稍后尝试");
 					 $(".df-submit").removeAttr("disabled");
 				}

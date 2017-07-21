@@ -1,7 +1,6 @@
 $(function() {
     modal.prepare();
     examing.initial();
-    console.log(123);
 });
 
 var examing = {
@@ -406,7 +405,7 @@ var examing = {
         var minutes = parseInt(time[1]);
         var seconds = parseInt(time[2]);
         data.duration = hours * 3600 + minutes * 60 + seconds;
-        console.log(data);
+        //console.log(data);
         $("#question-submit button").attr("disabled", "disabled");
         var request = $.ajax({
             headers : {
