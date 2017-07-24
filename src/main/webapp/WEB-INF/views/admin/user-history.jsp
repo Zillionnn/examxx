@@ -203,7 +203,7 @@
 
     function allFalse() {
         $.ajax({
-            //	url:'/examxx/admin/getAllFalse',
+           // 	url:'/examxx/admin/getAllFalse',
             url: '/admin/getAllFalse',
             async: false,
             type: 'GET',
@@ -263,7 +263,7 @@
 
     function getAllKLPoint() {
         $.ajax({
-         //   url:'/examxx/admin/getAllKnowledgePoint',
+          //  url:'/examxx/admin/getAllKnowledgePoint',
             url: '/admin/getAllKnowledgePoint',
             type: 'get',
             async: false,
