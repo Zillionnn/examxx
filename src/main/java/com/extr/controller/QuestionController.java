@@ -604,4 +604,12 @@ public class QuestionController {
 		List<Question> list=questionService.getQuestionByName(title);
 		return list;
 	}
+
+	@RequestMapping(method={RequestMethod.POST},value="/admin/getquestionbyid")
+	@ResponseBody
+	public Object getQuestionById( @RequestBody Integer id){
+		System.out.println(id);
+		Question question=questionService.getQuestionByQuestionId(id);
+		return question;
+	}
 }

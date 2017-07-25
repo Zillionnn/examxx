@@ -229,9 +229,22 @@
 	</select>
 
 	<select id="getQuestionByQuestionId" resultType="com.extr.domain.question.Question">
-		select * from et_question
+		select a.*,
+		b.point_id,
+		c.point_name pointName,
+		d.field_name fieldName,
+		e.name questionTypeName
+		from et_question a,
+		et_question_2_point b,
+		et_knowledge_point c,
+		et_field d,
+		et_question_type e
 		<where>
-			id = #{questionId}
+			a.id=b.question_id AND
+			b.point_id=c.point_id AND
+			d.field_id=c.field_id AND
+			e.id=a.question_type_id AND
+			a.id = #{questionId}
 		</where>
 	</select>
 

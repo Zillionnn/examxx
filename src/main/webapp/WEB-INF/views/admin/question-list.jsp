@@ -286,7 +286,7 @@
                                     <td>${items.pointName }</td>
                                         <%-- <td>${items.keyword }</td> --%>
                                     <td style="width:50px;">
-                                        <a class="change-property">修改</a>
+                                        <a class="change-property" onclick="showEditModel(${items.id})">修改</a>
                                         <a  class="hrefToHand" id="delete-question-btn" onclick="deleteQuestion(${items.id })">删除</a>
                                     </td>
                                 </tr>
@@ -296,6 +296,63 @@
                             </tbody>
                             <tfoot></tfoot>
                         </table>
+                      <%--  <div class="modal fade" id="change-property-modal" tabindex="-1" role="dialog"
+                             aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"
+                                                aria-hidden="true">&times;</button>
+                                        <h6 class="modal-title" id="myModalLabel">修改分类</h6>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="question-edit-form">
+                                            <span id="add-update-questionid" style="display:none;"></span>
+
+                                            <div class="form-line exampaper-type" id="aq-course1">
+                                                <span class="form-label"><span class="warning-label">*</span>专业：</span>
+                                                <select id="field-select" class="df-input-narrow">
+                                                    <c:forEach items="${fieldList}" var="field">
+
+                                                        <option value="${field.fieldId}" >${field.fieldName} </option>
+
+                                                    </c:forEach>
+                                                </select><span class="form-message"></span>
+                                            </div>
+                                            <div class="form-line exampaper-type" id="aq-course2">
+                                                <span class="form-label"><span class="warning-label">*</span>知识类：</span>
+                                                <select id="point-from-select" class="df-input-narrow">
+                                                    <c:forEach items="${knowledgeList}" var="item">
+                                                        <option value="${item.pointId}">${item.pointName} </option>
+                                                    </c:forEach>
+                                                </select><span class="form-message"></span>
+                                            </div>
+                                            <div class="form-line exampaper-type" id="aq-tag">
+                                                <span class="form-label"><span class="warning-label">*</span>标签：</span>
+                                                <select id="tag-from-select" class="df-input-narrow">
+                                                    <c:forEach items="${tagList }" var="item">
+                                                        <option value="${item.tagId }" data-privatee="${item.privatee }"
+                                                                data-creator="${item.creator}" data-memo="${item.memo }"
+                                                                data-createtime="${item.createTime }">${item.tagName } </option>
+                                                    </c:forEach>
+
+                                                </select><a class="add-tag-btn">添加</a><span class="form-message"></span>
+
+                                                <div class="q-label-list">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭窗口</button>
+                                        <button id="update-exampaper-btn" type="button" class="btn btn-primary">确定修改
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>--%>
+
+                        <%--2017-7-25 19:53:37--%>
                         <div class="modal fade" id="change-property-modal" tabindex="-1" role="dialog"
                              aria-labelledby="myLargeModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -313,7 +370,9 @@
                                                 <span class="form-label"><span class="warning-label">*</span>专业：</span>
                                                 <select id="field-select" class="df-input-narrow">
                                                     <c:forEach items="${fieldList}" var="field">
-                                                        <option value="${field.fieldId}">${field.fieldName} </option>
+
+                                                        <option value="${field.fieldId}" >${field.fieldName} </option>
+
                                                     </c:forEach>
                                                 </select><span class="form-message"></span>
                                             </div>
@@ -501,7 +560,7 @@ var resultTablebody=document.getElementById("resultTablebody");
                     var td6=tr.insertCell(-1);
                     td6.innerHTML=data[i].pointName;
                     var td7=tr.insertCell(-1);
-                    td7.innerHTML='  <a class="change-property">修改</a>';
+                    td7.innerHTML='  <a class="change-property" onclick="showEditModel('+qt_id+')">修改</a>';
                     var td8=tr.insertCell(-1);
                     td8.innerHTML=
                             '<a class="hrefToHand" id="delete-question-btn" onclick="deleteQuestion('+qt_id+' )">删除</a>';
@@ -518,12 +577,33 @@ var resultTablebody=document.getElementById("resultTablebody");
 /**
 *修改模态框
  */
-    function showEditModel(){
+    function showEditModel(id){
         $(".change-property").click(function () {
+            console.log(typeof  id);
             $("#change-property-modal").modal({backdrop: true, keyboard: true});
+//通过id查question
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+
+                url:'/admin/getquestionbyid',
+                type:'POST',
+                data:JSON.stringify(id),
+                dataType:'json',
+                success:function(data){
+                    console.log(data);
+                },
+                error:function(err){
+                    console.log(err);
+                }
+            });
+
+
             var paper_id = $(this).parent().parent().find(":checkbox").val();
             $("#add-update-questionid").text(paper_id);
-            $.ajax({
+      /*      $.ajax({
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -552,7 +632,7 @@ var resultTablebody=document.getElementById("resultTablebody");
                 error: function (jqXHR, textStatus) {
                     util.error("操作失败请稍后尝试");
                 }
-            });
+            });*/
         });
     }
 
