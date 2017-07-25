@@ -133,9 +133,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										<span data-id="2" <c:if test="${papertype == '2' }">
 												 class="label label-info"
 											</c:if>>模拟考试</span>
-										<span data-id="3" <c:if test="${papertype == '3' }">
-												 class="label label-info"
-											</c:if>>专家试卷</span>
+
 									</dd>
 								</dl>
 								

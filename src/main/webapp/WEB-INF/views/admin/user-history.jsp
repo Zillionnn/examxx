@@ -110,7 +110,7 @@
             <div class="col-xs-3">
                 <ul class="nav default-sidenav">
                     <li>
-                        <a> <i class="fa fa-list-ul"></i> 会员管理 </a>
+                        <a href="/admin/user-list"> <i class="fa fa-list-ul"></i> 会员管理 </a>
                     </li>
                     <li>
                         <a href="admin/add-user"> <i class="fa fa-list-ul"></i> 添加会员 </a>
