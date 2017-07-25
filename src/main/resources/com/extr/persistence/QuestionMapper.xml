@@ -435,5 +435,25 @@
 
 	</delete>
 
-
+<!--通过题目名  搜索题目-->
+	<select id="getQuestionListByName" parameterType="String" resultType="com.extr.domain.question.Question">
+		select a.id, a.name,
+		a.question_type_id ,
+		b.point_id,
+		c.point_name pointName,
+		d.field_name fieldName,
+		e.name questionTypeName
+		from et_question a,
+		et_question_2_point b,
+		et_knowledge_point c,
+		et_field d,
+		et_question_type e
+		<where>
+			a.id=b.question_id AND
+			b.point_id=c.point_id AND
+			d.field_id=c.field_id AND
+			e.id=a.question_type_id AND
+			a.name  LIKE  CONCAT('%',#{questionName},'%')
+		</where>
+	</select>
 </mapper>

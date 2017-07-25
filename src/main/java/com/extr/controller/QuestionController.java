@@ -596,5 +596,12 @@ public class QuestionController {
 		return list;
 
 	}
-	
+
+
+	@RequestMapping(method={RequestMethod.POST},value="/admin/searchQ")
+	@ResponseBody
+	public Object getQuestionByName( @RequestBody String title){
+		List<Question> list=questionService.getQuestionByName(title);
+		return list;
+	}
 }

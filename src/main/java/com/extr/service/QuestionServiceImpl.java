@@ -415,4 +415,13 @@ public class QuestionServiceImpl implements QuestionService {
 	public List<KnowledgePoint> getAllKnowledgePoint() {
 		return questionMapper.getAllKnowledgePoint();
 	}
+
+	@Override
+	public List<Question> getQuestionByName(String questionName) {
+		System.out.println(questionName);
+		return questionMapper.getQuestionListByName(questionName);
+
+	}
+
+
 }

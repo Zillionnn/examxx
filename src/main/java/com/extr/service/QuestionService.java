@@ -182,4 +182,11 @@ public interface QuestionService {
 	List<FalseQuestionResult> getFalseQuestionResult();
 
 	List<KnowledgePoint> getAllKnowledgePoint();
+
+	/**
+	 * 搜索题目
+	 */
+	 List<Question> getQuestionByName(String name);
+
+
 }

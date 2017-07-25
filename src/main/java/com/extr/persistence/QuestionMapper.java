@@ -172,4 +172,11 @@ public interface QuestionMapper {
 	public void deleteQuestionTag(@Param("questionId") int questionId, @Param("userId") int userId, @Param("array") List<QuestionTag> array);
 
 	 List<KnowledgePoint> getAllKnowledgePoint();
+
+	/**
+	 * 搜索
+	 */
+	List<Question> getQuestionListByName(@Param("questionName") String questionName);
+
+
 }
