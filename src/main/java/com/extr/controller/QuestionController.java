@@ -554,7 +554,7 @@ public class QuestionController {
 		return message;
 	}
 	
-	@RequestMapping(value = "/teacher/question-tag/{questionId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/d/{questionId}", method = RequestMethod.GET)
 	public @ResponseBody
 	Message getQuestionTag(@PathVariable("questionId") int questionId){
 		Message message = new Message();

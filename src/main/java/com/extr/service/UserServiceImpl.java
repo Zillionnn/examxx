@@ -86,6 +86,14 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 	}
 
-	
 
+	@Override
+	public void deleteUser(int user_id) {
+		userMapper.deleteUser(user_id);
+	}
+
+	@Override
+	public void deleteUserRoleByUserId(int user_id) {
+		userMapper.deleteUserRoleByUserId(user_id);
+	}
 }

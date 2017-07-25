@@ -324,4 +324,14 @@ public class UserController {
 		
 		return message;
 	}
+
+	@RequestMapping(method={RequestMethod.POST},value="/admin/delete_user")
+	@ResponseBody
+	public Object  deleteUserById( @RequestBody Integer userId){
+		System.out.println(userId);
+
+		userService.deleteUserRoleByUserId(userId);
+		userService.deleteUser(userId);
+return true;
+	}
 }

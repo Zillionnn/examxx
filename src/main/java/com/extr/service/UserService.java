@@ -22,4 +22,8 @@ public interface UserService {
 	public User getUserById(int user_id);
 	
 	public void disableUser(int user_id);
+
+	public void deleteUser(int user_id);
+
+	public  void deleteUserRoleByUserId(int user_id);
 }

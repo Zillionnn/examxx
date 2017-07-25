@@ -176,7 +176,7 @@ public interface QuestionService {
 	 */
 	public void updateQuestionPoint(Question question, int userId, List<QuestionTag> questionTagList);
 	
-	
+
 	public List<Question> getAllQuestion();
 	
 	List<FalseQuestionResult> getFalseQuestionResult();
