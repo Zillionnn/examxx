@@ -493,7 +493,7 @@ var resultTablebody=document.getElementById("resultTablebody");
                     var td2=tr.insertCell(-1);
                     td2.innerHTML=data[i].id;
                     var td3=tr.insertCell(-1);
-                    td3.innerHTML=data[i].name;
+                    td3.innerHTML='<a href="admin/question-preview/'+qt_id+' " target="_blank" title="预览">'+data[i].name+'</a>';
                     var td4=tr.insertCell(-1);
                     td4.innerHTML=data[i].questionTypeName;
                     var td5=tr.insertCell(-1);
