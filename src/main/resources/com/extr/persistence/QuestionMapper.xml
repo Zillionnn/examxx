@@ -230,8 +230,9 @@
 
 	<select id="getQuestionByQuestionId" resultType="com.extr.domain.question.Question">
 		select a.*,
-		b.point_id,
+		b.point_id pointId,
 		c.point_name pointName,
+		d.field_id fieldId,
 		d.field_name fieldName,
 		e.name questionTypeName
 		from et_question a,
@@ -469,4 +470,15 @@
 			a.name  LIKE  CONCAT('%',#{questionName},'%')
 		</where>
 	</select>
+
+<!--2017-7-26 12:50:08  更新题目-->
+	<update id="updateQuestion" >
+			update		et_question
+			set
+			name=#{questionName},
+			content=#{questionContent},
+			answer=#{answer}
+
+			where id=#{id}
+	</update>
 </mapper>

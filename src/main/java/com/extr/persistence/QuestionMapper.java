@@ -178,5 +178,14 @@ public interface QuestionMapper {
 	 */
 	List<Question> getQuestionListByName(@Param("questionName") String questionName);
 
-
+	/**
+	 * udpate
+	 * @param id
+	 * @param questionName
+	 * @param answer
+	 */
+	public void updateQuestion(@Param("id") int id,
+							   @Param("questionName") String questionName,
+							   @Param("questionContent") String questionContent,
+							   @Param("answer") String answer);
 }

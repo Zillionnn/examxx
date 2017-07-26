@@ -27,7 +27,9 @@ public class Question implements Serializable {
 	private float difficulty;
 	private String analysis;
 	private QuestionContent questionContent;
+	private int pointId;
 	private String pointName;
+	private int fieldId;
 	private String fieldName;
 	private String questionTypeName;
 	private List<Integer> pointList;
@@ -185,5 +187,20 @@ public class Question implements Serializable {
 	public void setCreator(String creator) {
 		this.creator = creator;
 	}
-	
+
+	public int getFieldId() {
+		return fieldId;
+	}
+
+	public void setFieldId(int fieldId) {
+		this.fieldId = fieldId;
+	}
+
+	public int getPointId() {
+		return pointId;
+	}
+
+	public void setPointId(int pointId) {
+		this.pointId = pointId;
+	}
 }

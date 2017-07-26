@@ -175,7 +175,13 @@ public interface QuestionService {
 	 * @param questionTagList
 	 */
 	public void updateQuestionPoint(Question question, int userId, List<QuestionTag> questionTagList);
-	
+
+	/**
+	 *更新题目
+	 * @param question
+	 * @param userId
+	 */
+	public void updateQuestion(Question question, int userId);
 
 	public List<Question> getAllQuestion();
 	

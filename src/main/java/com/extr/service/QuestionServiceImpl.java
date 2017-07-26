@@ -373,12 +373,30 @@ public class QuestionServiceImpl implements QuestionService {
 			questionMapper.deleteQuestionPointByQuestionId(question.getId());
 			for (int id : question.getPointList()) {
 				questionMapper.addQuestionKnowledgePoint(question.getId(), id);
+				//questionMapper.updateQuestionWithList();
 			}
 
 			if(questionTagList != null && questionTagList.size() != 0){
 				questionMapper.deleteQuestionTag(question.getId(), userId, questionTagList);
 				questionMapper.addQuestionTag(questionTagList);
 			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e.getClass().getName());
+		}
+	}
+
+
+	@Override
+	public void updateQuestion(Question question, int userId) {
+		try {
+			questionMapper.deleteQuestionPointByQuestionId(question.getId());
+			for (int id : question.getPointList()) {
+				questionMapper.addQuestionKnowledgePoint(question.getId(), id);
+				//questionMapper.updateQuestionWithList();
+			}
+				questionMapper.updateQuestion(question.getId(),question.getName(),question.getContent(),question.getAnswer());
 
 		} catch (Exception e) {
 			e.printStackTrace();
