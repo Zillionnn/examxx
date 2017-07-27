@@ -181,12 +181,21 @@ String basePath = request.getScheme() + "://"
 										     				<div class="knowledge-title">
 										     					<i class="fa fa-chevron-up"> </i><i class="fa fa-chevron-down" style="display:none;"> </i>  <span class="knowledge-title-name">${item.key}</span>
 										     				</div>
-										     				
+
 										     				<ul class="question-list-knowledge" style="display:none;">
+																<c:forEach items="${item.value}" varStatus="status" var="tp">
+																	<c:if test="${status.count==1}">
+																		<button onclick="restartPractise(${tp.questionPointId})"  class="btn btn-default btn-sm join-practice-btn" >
+																			重置此知识点练习
+																		</button>
+																	</c:if>
+																</c:forEach>
+
 										     					<c:forEach items="${item.value }" var="tp">
 										     						<li>${tp.questionTypeName } [共<span class="question-number">${tp.amount } </span>题]
 										     							[已做<span class="question-number-2">${tp.rightTimes + tp.wrongTimes } </span> 题]
 										     							<a href="student/practice-improve/${tp.questionPointId }/${tp.questionTypeId }" class="btn btn-success btn-sm join-practice-btn">参加练习</a>
+
 										     						</li>
 										     					</c:forEach>
 										     				</ul>
@@ -227,7 +236,10 @@ String basePath = request.getScheme() + "://"
 										     <div class="modal-body">
 										     	<ul>
 										     		<c:forEach items="${wrongKnowledgeMap }" var="item" >
-										     			<li><span class="point-name"> ${item.key }</span> [共<span class="question-number-3"><c:forEach items="${item.value }" var="v">${v.value }</c:forEach> </span>题]
+										     			<li><span class="point-name"> ${item.key }</span>
+															[共<span class="question-number-3">
+																<c:forEach items="${item.value }" var="v">${v.value/2 }</c:forEach>
+															</span>题]
 							 			     							<a href="student/practice-incorrect/<c:forEach items="${item.value }" var="k">${k.key }</c:forEach>" class="btn btn-success btn-sm join-practice-btn">参加练习</a>
 										     			</li>
 										     		</c:forEach>
@@ -467,9 +479,9 @@ String basePath = request.getScheme() + "://"
 	var exampaperid;
 	function startRandomExam(){
 
-			var question_entity={"paperName":"模拟试卷","passPoint":60,"time":"45","paperPoint":"100","paperType":"1",
-				"questionTypeNum":{"1":20,"3":10},"questionTypePoint":{"1":5,"2":5,"3":5},
-				"questionKnowledgePointRate":{"1":0,"2":0}};
+			var question_entity={"paperName":"模拟试卷","passPoint":60,"time":"60","paperPoint":"100","paperType":"1",
+				"questionTypeNum":{"1":20,"2":2,"3":10,"4":1},"questionTypePoint":{"1":1,"2":5,"3":5,"4":10},
+				"questionKnowledgePointRate":{"1":0,"2":0,"3":0}};
 
 			//console.log(JSON.stringify(question_entity));
 			$.ajax({
@@ -508,4 +520,23 @@ String basePath = request.getScheme() + "://"
 			});
 		}
 
+
+	function restartPractise(id){
+		var result=confirm("确定重新开始此知识点练习吗？");
+		if(result){
+			$.ajax({
+				url:'/restart-practise/'+id,
+				type:'GET',
+				dataType:'json',
+				success:function(data){
+					alert("已重置该知识点练习进度");
+					window.location.reload();
+				},
+				error:function(err){
+					console.log(err);
+				}
+			});
+		}
+
+	}
 </script>

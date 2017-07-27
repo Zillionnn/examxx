@@ -10,7 +10,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.*;
 
+import com.extr.domain.question.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
@@ -18,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -130,14 +133,16 @@ public class BaseController {
 		admin, teacher, student;
 	}
 
-	
+	/**
+	 * 首页初始化
+	 * @param model
+	 */
 	public void appendBaseInfo(Model model){
 		List<ExamPaper> historypaper = examService.getExamPaperList4Exam(1);
 		List<ExamPaper> practicepaper = examService.getExamPaperList4Exam(2);
 		List<ExamPaper> expertpaper = examService.getExamPaperList4Exam(3);
 		
-		
-		
+
 		Object userInfo = SecurityContextHolder.getContext()
 			    .getAuthentication()
 			    .getPrincipal();
@@ -243,9 +248,7 @@ public class BaseController {
 			tmpList.add(qir);
 			classifyMap.put(qir.getQuestionPointName(), tmpList);
 		}
-		
-		
-		
+
 		model.addAttribute("classifyMap", classifyMap);
 		model.addAttribute("wrongKnowledgeMap", wrongKnowledgeMap);
 		model.addAttribute("historypaper", historypaper);
@@ -254,6 +257,77 @@ public class BaseController {
 		model.addAttribute("knowledgelist", kl);
 		
 	}
+
+
+
+	@RequestMapping(value ={ "/restart-practise/{pointId}"},method = RequestMethod.GET)
+	@ResponseBody
+	public Object restartPratise(@PathVariable("pointId") int pointId){
+		System.out.println(pointId);
+
+		Object userInfo = SecurityContextHolder.getContext()
+				.getAuthentication()
+				.getPrincipal();
+
+		UserQuestionHistory history = new UserQuestionHistory();
+		history = questionService.getUserQuestionHistoryByUserId(((UserInfo)userInfo).getUserid());
+
+		Map<Integer,QuestionHistory> rightMap = new HashMap<Integer,QuestionHistory>();
+		Map<Integer,QuestionHistory> wrongMap = new HashMap<Integer,QuestionHistory>();
+		Map<Integer,QuestionHistory> otherMap = new HashMap<Integer,QuestionHistory>();
+
+		if(history != null){
+			System.out.println("history is not NULL");
+			if(history.getHistory() != null){
+				if(history.getHistory().containsKey(1)){
+					rightMap = history.getHistory().get(1);
+
+					Iterator<Map.Entry<Integer,QuestionHistory>> iter = rightMap.entrySet().iterator();
+					while (iter.hasNext()) {
+						Map.Entry<Integer,QuestionHistory> entry=iter.next();
+					QuestionHistory q=entry.getValue();
+						if(q.getPointId()==pointId){
+							iter.remove();
+						}
+					}
+
+				}
+
+				if(history.getHistory().containsKey(0)){
+					wrongMap = history.getHistory().get(0);
+					Iterator<Map.Entry<Integer,QuestionHistory>> iter = wrongMap.entrySet().iterator();
+					while (iter.hasNext()) {
+						Map.Entry<Integer,QuestionHistory> entry=iter.next();
+						QuestionHistory q=entry.getValue();
+						if(q.getPointId()==pointId){
+							iter.remove();
+						}
+					}
+				}
+
+				if(history.getHistory().containsKey(-1)){
+					otherMap = history.getHistory().get(-1);
+
+				}
+			}
+
+		}
+		Map<Integer, Map<Integer, QuestionHistory>> map = history.getHistory();
+		map.put(1, rightMap);
+		map.put(0,wrongMap);
+
+		history.setHistory(map);
+
+		try {
+			questionService.updateUserQuestionHistory(history);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return history;
+	}
+
+
+
 }
 
 
