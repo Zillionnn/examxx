@@ -373,14 +373,18 @@ public class ExamController {
 
 		Message message = new Message();
 		try {
-			ExamHistory examHistory = examService
-					.getUserExamHistoryByHistId(efp.getExam_history_id());
+			ExamHistory examHistory = examService.getUserExamHistoryByHistId(efp.getExam_history_id());
 			System.out.println(efp.getExam_history_id());
+
+			//用户提交的答案
 			List<QuestionQueryResult> questionList = Object2Xml.toBean(examHistory.getContent(), List.class);
 			float pointGet = 0f;
 			for(QuestionQueryResult qqr : questionList){
-				if(qqr.getAnswer().equals(efp.getAs().get(qqr.getQuestionId()).getAnswer()))
+
+				if(qqr.getAnswer().equals(efp.getAs().get(qqr.getQuestionId()).getAnswer())){
 					pointGet += qqr.getQuestionPoint();
+				}
+
 			}
 			//计算得分
 			examHistory.setPointGet(pointGet);
@@ -427,6 +431,12 @@ public class ExamController {
 		return "student/paper-exam-finish-report";
 	}
 
+	/**
+	 * 试卷完成后的成绩   只计算  questionType 1 ，2，3，4
+	 * @param model
+	 * @param examPaperId
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "student/finish-exam/{examPaperId}", method = RequestMethod.GET)
 	public String  paperExamFinishedPage(Model model,
@@ -434,28 +444,31 @@ public class ExamController {
 		UserInfo userInfo = (UserInfo) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
 
-		ExamHistory examHistory = examService
-				.getUserExamHistoryByUserIdAndExamPaperId(userInfo.getUserid(),
-						examPaperId);
-		HashMap<Integer, AnswerSheetItem> hm = Object2Xml.toBean(
-				examHistory.getAnswerSheet(), HashMap.class);
+		ExamHistory examHistory = examService	.getUserExamHistoryByUserIdAndExamPaperId(userInfo.getUserid(),examPaperId);
+
+		//用户的答题卡hm
+		HashMap<Integer, AnswerSheetItem> hm = Object2Xml.toBean(	examHistory.getAnswerSheet(), HashMap.class);
 
 		int total = hm.size();
 		int wrong = 0;
 		int right = 0;
 
 		HashMap<String, ReportResult> reportResultList = new HashMap<String, ReportResult>();
+		//用户试卷的题目questionQueryList
 		List<QuestionQueryResult> questionQueryList = Object2Xml.toBean(
 				examHistory.getContent(), List.class);
 
 		List<Integer> idList = new ArrayList<Integer>();
 		HashMap<Integer, Boolean> answer = new HashMap<Integer, Boolean>();
 		List<Integer> list=new ArrayList<Integer>();
+
 		for (QuestionQueryResult q : questionQueryList) {
 			String pointName = q.getPointName().split(">")[1];
+			//id列表里添加用户试卷题目的id
 			idList.add(q.getQuestionId());
+
 			if (q.getQuestionTypeId() != 1 && q.getQuestionTypeId() != 2
-					&& q.getQuestionTypeId() != 3)
+					&& q.getQuestionTypeId() != 3 && q.getQuestionTypeId()!=4)
 				continue;
 			if (hm.get(q.getQuestionId()) != null) {
 				if (q.getAnswer().equals(hm.get(q.getQuestionId()).getAnswer())) {
@@ -532,7 +545,7 @@ public class ExamController {
 			String pointName = q.getPointName().split(">")[1];
 			idList.add(q.getQuestionId());
 			if (q.getQuestionTypeId() != 1 && q.getQuestionTypeId() != 2
-					&& q.getQuestionTypeId() != 3)
+					&& q.getQuestionTypeId() != 3 && q.getQuestionTypeId()!=4)
 				continue;
 			if (hm.get(q.getQuestionId()) != null) {
 				if (q.getAnswer().equals(hm.get(q.getQuestionId()).getAnswer())) {

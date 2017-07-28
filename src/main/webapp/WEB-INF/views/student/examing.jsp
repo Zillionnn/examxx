@@ -174,7 +174,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<!-- Bootstrap JS -->
 		<script type="text/javascript" src="resources/bootstrap/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="resources/js/all.js"></script>
-		<script type="text/javascript" src="resources/js/paperexaming.js"></script>
+		<script type="text/javascript" src="resources/js/paper-examing.js"></script>
 
 	</body>
 </html>

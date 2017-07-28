@@ -395,6 +395,7 @@ var examing = {
     finishExam : function finishExam() {
         modal.showProgress();
         var answerSheet = examing.genrateAnswerSheet();
+
         var data = new Object();
         var exam_history_id = $("#hist-id").val();
         data.exam_history_id = exam_history_id;
@@ -407,15 +408,16 @@ var examing = {
         data.duration = hours * 3600 + minutes * 60 + seconds;
         //console.log(data);
         $("#question-submit button").attr("disabled", "disabled");
+        console.log(data);
         var request = $.ajax({
-            headers : {
-                'Accept' : 'application/json',
-                'Content-Type' : 'application/json'
-            },
-            type : "POST",
-            url : "student/exam-submit",
-            data : JSON.stringify(data)
-        });
+         headers : {
+         'Accept' : 'application/json',
+         'Content-Type' : 'application/json'
+         },
+         type : "POST",
+         url : "student/exam-submit",
+         data : JSON.stringify(data)
+         });
 
         request.done(function(message, tst, jqXHR) {
             if (!util.checkSessionOut(jqXHR))
@@ -484,7 +486,11 @@ var examing = {
                 }
                 answerSheetItem.question_type_id = 3;
             } else if ($(questions[i]).hasClass("qt-fillblank")) {
-                answerSheetItem.answer = $(questions[i]).find("textarea").val();
+                //填空去除逗号
+                var string=$(questions[i]).find("textarea").val();
+                string=  string.replace(/，/g,'');
+                string=string.replace(/,/g,'');
+                answerSheetItem.answer = string;
                 answerSheetItem.question_type_id = 4;
             } else if ($(questions[i]).hasClass("qt-shortanswer")) {
                 answerSheetItem.answer = $(questions[i]).find("textarea").val();
@@ -509,9 +515,12 @@ var examing = {
         $(".question-list-item").click(function(){
             $(this).parent().find(".question-list-item-selected").removeClass("question-list-item-selected");
             $(this).addClass("question-list-item-selected");
-            //console.log("click");
-            //console.log($(this).find("input").prop("checked"));
-            $(this).find("input").prop("checked", true);
+            if($(this).find("input").prop("checked")==true){
+                $(this).find("input").prop("checked", false);
+            }else{
+                $(this).find("input").prop("checked", true);
+            }
+
         });
 
     }

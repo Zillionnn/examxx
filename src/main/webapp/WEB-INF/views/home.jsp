@@ -479,6 +479,7 @@ String basePath = request.getScheme() + "://"
 	var exampaperid;
 	function startRandomExam(){
 
+		//"questionKnowledgePointRate":{"1":0,"2":0,"3":0}};   "1":0  1为知识点
 			var question_entity={"paperName":"模拟试卷","passPoint":60,"time":"60","paperPoint":"100","paperType":"1",
 				"questionTypeNum":{"1":20,"2":2,"3":10,"4":1},"questionTypePoint":{"1":1,"2":5,"3":5,"4":10},
 				"questionKnowledgePointRate":{"1":0,"2":0,"3":0}};
