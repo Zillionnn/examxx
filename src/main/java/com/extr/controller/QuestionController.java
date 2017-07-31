@@ -29,6 +29,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileNotFoundException;
 import java.io.StringReader;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.*;
 
 @Controller
@@ -400,6 +402,7 @@ public class QuestionController {
                 .getAuthentication().getPrincipal();
         Question question = new Question();
         question.setId(questionId);
+        //answer = new String(answer.getBytes("ISO-8859-1"), "UTF-8");
         question.setAnswer(answer);
         //content修改
         System.out.println(questionContent);
