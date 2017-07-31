@@ -392,6 +392,8 @@ var examing = {
 			}
 		}else{
 			answer = $(thisquestion).find("textarea").val();
+			answer=  answer.replace(/，/g,'');
+			answer=answer.replace(/,/g,'');
 		}
 		return answer;
 	},
